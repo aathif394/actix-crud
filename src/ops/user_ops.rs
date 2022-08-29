@@ -4,6 +4,7 @@ use diesel::prelude::*;
 
 
 pub fn get_users() -> Vec<User> {
+    println!("Getting users");
     use crate::schema::users::dsl::*;
 
     let conn = establish_connection();
