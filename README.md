@@ -10,3 +10,7 @@ git clone https://github.com/aathif394/actix-crud/
 cd actix-crud
 cargo run --release
 ```
+# License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+This project is licensed under the terms of the MIT License
