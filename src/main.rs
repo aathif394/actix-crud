@@ -27,6 +27,8 @@ async fn main() -> std::io::Result<()> {
     let pool: DbPool = r2d2::Pool::builder()
         .build(manager)
         .expect("Failed to create pool.");
+   
+    let port = std::env::var("PORT").expect("$PORT is not set.");
 
     HttpServer::new(move || {
         App::new()
@@ -40,7 +42,7 @@ async fn main() -> std::io::Result<()> {
             .service(user::update)
             .service(user::delete)        
     })
-    .bind(("0.0.0.0", 8088))?
+    .bind(("0.0.0.0", port.parse().unwrap()))?
     .run()
     .await
 }
