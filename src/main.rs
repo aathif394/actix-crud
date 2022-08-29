@@ -1,4 +1,4 @@
-use actix_web::{get, post, patch, delete, web, App, HttpServer, HttpResponse, Responder};
+use actix_web::{get, post, patch, delete, web, middleware::Logger, App, HttpServer, HttpResponse, Responder};
 use crate::models::{User, NewUser, DelUser};
 
 mod models;
@@ -62,7 +62,7 @@ async fn delete(user: web::Json<DelUser>) -> impl Responder {
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            // .route("/hello", web::get().to(|| async { "Hello World!" }))
+            .wrap(Logger::default())
             .service(get)
             .service(create)
             .service(update)
