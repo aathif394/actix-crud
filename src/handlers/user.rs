@@ -35,14 +35,14 @@ async fn create(pool: web::Data<DbPool>, payload: web::Json<UserPayload>) -> Res
     .await?
     .map_err(actix_web::error::ErrorInternalServerError)?;
 
-    Ok(HttpResponse::Ok().json(user))
+    Ok(HttpResponse::Created().json(user))
 }
 
 #[patch("/users/{id}")]
 async fn update(pool: web::Data<DbPool>, id: web::Path<i32>, payload: web::Json<UserPayload>) -> Result<HttpResponse, Error> {
     let user = web::block(move || {
         let conn = pool.get()?;
-        update_user(id.into_inner(), payload.0, &conn)
+        update_user(id.into_inner(), payload.into_inner(), &conn)
     })
     .await?
     .map_err(actix_web::error::ErrorInternalServerError)?;
