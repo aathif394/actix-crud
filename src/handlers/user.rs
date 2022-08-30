@@ -30,7 +30,7 @@ async fn select(pool: web::Data<DbPool>, id: web::Path<i32>) -> Result<HttpRespo
 async fn create(pool: web::Data<DbPool>, payload: web::Json<UserPayload>) -> Result<HttpResponse, Error> {
     let user = web::block(move || {
         let conn = pool.get()?;
-        add_user(payload.0, &conn)
+        add_user(payload.into_inner(), &conn)
     })
     .await?
     .map_err(actix_web::error::ErrorInternalServerError)?;
